@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>MetHotels</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.5.0/semantic.min.js"
     integrity="sha512-Xo0Jh8MsOn72LGV8kU5LsclG7SUzJsWGhXbWcYs2MAmChkQzwiW/yTQwdJ8w6UA9C6EVG18GHb/TrYpYCjyAQw=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -17,9 +17,9 @@
 
 
   <form class="ui large form segment">
-    <h3 class="ui header">Add a Link</h3>
+    <h3 class="ui header">Dodaj sobu</h3>
     <div class="field">
-      <label for="naziv">naziv:</label>
+      <label for="naziv">Naziv:</label>
       <input name="naziv" id="naziv" #newnaziv> <!-- promenjeno -->
     </div>
     <div class="field">
@@ -27,13 +27,13 @@
       <input name="link" id="link" #newlink> <!-- promenjeno -->
     </div>
     <div class="field">
-      <label for="brGostiju">brGostiju:</label>
+      <label for="brGostiju">Broj gostiju:</label>
       <input name="brGostiju" id="brGostiju" #newbrGostiju> <!-- promenjeno -->
     </div>
     <!-- dugme prosleđuje metodi parametre newnaziv i newlink-->
     <button (click)="addSoba(newnaziv, newlink, newbrGostiju)" class="ui positive right floated
   button">
-      Submit link
+      Dodaj sobu
     </button>
   </form>
   <div class="ui grid posts">
