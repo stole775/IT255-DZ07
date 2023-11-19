@@ -1,55 +1,53 @@
 body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f2f2f2;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 100vh;
-    margin: 0;
-  }
-  
-  form.ui.large.form.segment {
-    max-width: 400px;
-    width: 100%;
-    padding: 20px;
-    background-color: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    position: fixed;
-    left: 20px;
-  }
-  
+  font-family: 'Arial', sans-serif;
+  background-color: #f2f2f2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: 100vh;
+  margin: 0;
+}
+
+.ui.secondary.pointing.menu {
+  display: flex;
+  justify-content: space-around;
+  padding: 10px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+}
+
+.ui.grid.posts {
+  max-width: 100%;
+  width: calc(100% - 20px); /* Adjust as needed */
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 0 80px rgba(0, 0, 0, 0.1);
+  margin-top: 50px; /* Adjust as needed */
+}
+
+form.ui.large.form.segment {
+  max-width: 400px;
+  width: 100%;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin-top: 20px; /* Adjust as needed */
+  top: 5%;
+}
+
+@media only screen and (max-width: 768px) {
   .ui.grid.posts {
-    max-width: calc(80% - 400px - 40px);
-    width: 100%;
-    position: fixed;
-    right: 20%;
-    top: 5%;
-    bottom: 0;
-    overflow-y: auto;
-    padding: 20px;
-    background-color: #fff;
-    box-shadow: 0 0 80px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    
+    max-width: 100%;
+    width: calc(100% - 20px); /* Adjust as needed */
+    margin-top: 20px; /* Adjust as needed */
   }
- 
-  .header a {
-    text-decoration: none;
-    color: #333;
+
+  form.ui.large.form.segment {
+    margin-top: 20px; /* Adjust as needed */
   }
-  
-  .meta {
-    color: #666;
-    margin-top: 5px;
-  }
-  
-  .list.voters {
-    margin-top: 10px;
-  }
-  
-  .list.voters .item {
-    margin-right: 10px;
-  }
-  
+}

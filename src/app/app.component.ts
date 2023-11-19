@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { Soba } from './soba/soba.model';
+import { HostListener } from '@angular/core';
+import { ElementRef } from '@angular/core';
+
 
 @Component({
   selector: 'app-root',
@@ -7,16 +10,19 @@ import { Soba } from './soba/soba.model';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title(title: any) {
-    throw new Error('Method not implemented.');
-  }
-  naziv(naziv: any) {
-    throw new Error('Method not implemented.');
-  }
-  sobe: Soba[]; //osobina komponente
+
+  title: string = ''; // *
+  naziv: string = ''; // *
+  sobe: Soba[]; // lista
+  selectedComponent: string = 'ponuda';
 
 
-  constructor() {
+  isMenuVisible = false;//poveznao jednosmernim bindingom u html
+
+  deleteStatus: 'success' | 'error' | null = null;
+  addStatus: 'success' | 'error' | null = null;
+
+  constructor(private elementRef: ElementRef) {
     this.sobe = [
       new Soba('Hotel Grand S1', 'http://hotelgrand.com/soba1', 3, 2),
       new Soba('Hotel Grand S2', 'http://hotelgrand.com/soba2', 2, 4),
@@ -24,14 +30,68 @@ export class AppComponent {
     ];
   }
   addSoba(naziv: HTMLInputElement, link: HTMLInputElement, brGostiju: HTMLInputElement): boolean {
-    const brGostijuValue = Number(brGostiju.value); // Convert to a number
-    console.log(`Adding article naziv: ${naziv.value}, link: ${link.value}, brGostiju: ${brGostijuValue}`);
-    this.sobe.push(new Soba(naziv.value, link.value, 0, brGostijuValue));
+    const brGostijuValue = Number(brGostiju.value);
+
+    // Provera da li već postoji soba sa istim nazivom
+    const exists = this.sobe.some(soba => soba.naziv === naziv.value);
+
+    if (exists) {
+      this.addStatus = 'error';
+      console.log(`Soba sa nazivom ${naziv.value} već postoji.`);
+    } else {
+      this.sobe.push(new Soba(naziv.value, link.value, 0, brGostijuValue));
+      this.addStatus = 'success';
+      console.log(`Soba sa nazivom ${naziv.value} uspešno dodata.`);
+    }
+
+    setTimeout(() => {
+      this.addStatus = null;
+    }, 3000); // 3 sekunde
+
     naziv.value = '';
     link.value = '';
     brGostiju.value = '';
+
     return false;
   }
-  removeSoba(){}
+
+
+    obrisiSobu(naziv: string): boolean {
+      const index = this.sobe.findIndex(s => s.naziv === naziv);
+
+      if(index !== -1) {
+      this.sobe.splice(index, 1);
+      this.deleteStatus = 'success';
+      console.log(`Uspešno obrisana soba sa nazivom: ${naziv}`);
+    } else {
+      this.deleteStatus = 'error';
+      console.log(`Soba sa nazivom ${naziv} ne postoji.`);
+    }
+
+    setTimeout(() => {
+      this.deleteStatus = null;
+    }, 3000); // 3 sekunde
+    return false;
+  }
+
+
+
+  showComponent(component: string): void {
+    this.selectedComponent = component;
+    this.isMenuVisible = true;
+  }
+
+  @HostListener('document:click', ['$event'])
+  toggleMenu(event: Event): void {
+    const targetElement = event.target as HTMLElement;
+
+    // Proveri da li je kliknuto na traku menija
+    const isMenuClick = targetElement.closest('.ui.secondary.menu');
+
+    // Ako nije kliknuto na traku menija, sakrij meni
+    if (!isMenuClick) {
+      this.isMenuVisible = false;
+    }
+  }
 
 }

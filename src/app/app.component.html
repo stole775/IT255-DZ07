@@ -15,30 +15,59 @@
 
 <body>
 
+  <div class="ui secondary pointing menu" (click)="toggleMenu($event)">
+    <a class="item" (click)="showComponent('ponuda')">Ponuda</a>
+    <a class="item" (click)="showComponent('preporuka')">Preporuka</a>
+    <a class="item" (click)="showComponent('o-nama')">O nama</a>
+  </div>
+
+  <div class="ui grid posts" *ngIf="isMenuVisible">
+    <ng-container *ngIf="selectedComponent === 'ponuda'">
+      <app-ponuda></app-ponuda>
+    </ng-container>
+    <ng-container *ngIf="selectedComponent === 'preporuka'">
+      <app-preporuka></app-preporuka>
+    </ng-container>
+    <ng-container *ngIf="selectedComponent === 'o-nama'">
+      <app-o-nama></app-o-nama>
+    </ng-container>
+  </div>
+
 
   <form class="ui large form segment">
     <h3 class="ui header">Dodaj sobu</h3>
     <div class="field">
       <label for="naziv">Naziv:</label>
-      <input name="naziv" id="naziv" #newnaziv> <!-- promenjeno -->
+      <input name="naziv" id="naziv" #newnaziv>
     </div>
     <div class="field">
       <label for="link">Link:</label>
-      <input name="link" id="link" #newlink> <!-- promenjeno -->
+      <input name="link" id="link" #newlink>
     </div>
     <div class="field">
       <label for="brGostiju">Broj gostiju:</label>
-      <input name="brGostiju" id="brGostiju" #newbrGostiju> <!-- promenjeno -->
+      <input name="brGostiju" id="brGostiju" #newbrGostiju>
     </div>
-    <!-- dugme prosleđuje metodi parametre newnaziv i newlink-->
+
+
     <button (click)="addSoba(newnaziv, newlink, newbrGostiju)" class="ui positive right floated
   button">
       Dodaj sobu
     </button>
+    <button (click)="obrisiSobu(newnaziv.value)" class="ui negative right floated button">
+      Obriši sobu
+    </button>
+    
+    <label *ngIf="deleteStatus === 'success'" class="success-message">Soba uspešno obrisana.</label>
+    <label *ngIf="deleteStatus === 'error'" class="error-message">Soba nije pronađena.</label>
+
+    <label *ngIf="addStatus === 'success'" class="success-message">Soba uspešno dodata.</label>
+    <label *ngIf="addStatus === 'error'" class="error-message">Soba već postoji.</label>
+
   </form>
   <div class="ui grid posts">
-    <app-soba *ngFor="let soba of sobe" [soba]="soba"></app-soba> 
-    
+    <app-soba *ngFor="let soba of sobe" [soba]="soba"></app-soba>
+
   </div>
 </body>
 
