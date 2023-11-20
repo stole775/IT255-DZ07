@@ -38,7 +38,7 @@
     <h3 class="ui header">Dodaj sobu</h3>
     <div class="field">
       <label for="naziv">Naziv:</label>
-      <input name="naziv" id="naziv" #newnaziv>
+      <input name="naziv" id="naziv" #newnaziv [(ngModel)]="naziv" (ngModelChange)="proveriDuzinu($event)">
     </div>
     <div class="field">
       <label for="link">Link:</label>
@@ -49,18 +49,49 @@
       <input name="brGostiju" id="brGostiju" #newbrGostiju>
     </div>
 
+    <div class="field">
+      <label>Dodatne usluge:</label>
+      <div class="ui checkbox">
+        <input type="checkbox" id="klima"  name="klima"  [(ngModel)]="klima" (ngModelChange)="izracunajCenu()">
+        <label for="klima">Klima</label>
+      </div>
+      <br>
+      <div class="ui checkbox">
+        <input type="checkbox" id="miniBar" name="miniBar" [(ngModel)]="miniBar" (ngModelChange)="izracunajCenu()">
+        <label for="miniBar">Mini Bar</label>
+      </div>
+      <br>
+      <div class="ui checkbox">
+        <input type="checkbox" id="sauna"  name="sauna" [(ngModel)]="sauna" (ngModelChange)="izracunajCenu()">
+        <label for="sauna">Sauna</label>
+      </div>
 
-    <button (click)="addSoba(newnaziv, newlink, newbrGostiju)" class="ui positive right floated
-  button">
+    </div>
+
+    <ng-container *ngIf="racun > 5000; else osnova">
+      <div class="ui message" style="width: 70%;  ">
+        <p>Vaš račun je uvećan za {{ racun }} dinara.</p>
+      </div>
+    </ng-container>
+    
+    <ng-template #osnova>
+      <div class="ui message" style="width: 70%;  ">
+        <p>Osnovna cena je {{ racun }} dinara.</p>
+      </div>
+    </ng-template>
+    
+
+<div>
+    <button (click)="addSoba(newnaziv, newlink, newbrGostiju)" class="ui positive right floated button">
       Dodaj sobu
     </button>
     <button (click)="obrisiSobu(newnaziv.value)" class="ui negative right floated button">
       Obriši sobu
     </button>
-    
+</div>
     <label *ngIf="deleteStatus === 'success'" class="success-message">Soba uspešno obrisana.</label>
     <label *ngIf="deleteStatus === 'error'" class="error-message">Soba nije pronađena.</label>
-
+    <label *ngIf="addStatus === 'greskaUDodavanju'" class="error-message">Pogresan unos.</label>
     <label *ngIf="addStatus === 'success'" class="success-message">Soba uspešno dodata.</label>
     <label *ngIf="addStatus === 'error'" class="error-message">Soba već postoji.</label>
 

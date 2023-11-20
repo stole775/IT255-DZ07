@@ -23,11 +23,11 @@ body {
 
 .ui.grid.posts {
   max-width: 100%;
-  width: calc(100% - 20px); /* Adjust as needed */
+  width: calc(100% - 20px);
   padding: 20px;
   background-color: #fff;
   box-shadow: 0 0 80px rgba(0, 0, 0, 0.1);
-  margin-top: 50px; /* Adjust as needed */
+  margin-top: 50px;
 }
 
 form.ui.large.form.segment {
@@ -36,18 +36,30 @@ form.ui.large.form.segment {
   padding: 20px;
   background-color: #fff;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  margin-top: 20px; /* Adjust as needed */
+  margin-top: 20px;
   top: 5%;
 }
 
 @media only screen and (max-width: 768px) {
   .ui.grid.posts {
     max-width: 100%;
-    width: calc(100% - 20px); /* Adjust as needed */
-    margin-top: 20px; /* Adjust as needed */
+    width: calc(100% - 20px);
+    margin-top: 20px;
   }
 
   form.ui.large.form.segment {
-    margin-top: 20px; /* Adjust as needed */
+    margin-top: 20px; 
   }
+}
+
+.success-message {
+  color: rgb(5, 131, 5);
+  text-shadow: 1px 1px 1px rgba(56, 52, 52, 0.2); 
+  font-family: 'Arial', sans-serif; 
+}
+
+.error-message {
+  color: rgb(245, 9, 9); 
+  text-shadow: 1px 1px 1px rgba(82, 78, 78, 0.2); 
+  font-family: 'Arial', sans-serif; 
 }

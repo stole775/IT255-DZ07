@@ -16,11 +16,16 @@ export class AppComponent {
   sobe: Soba[]; // lista
   selectedComponent: string = 'ponuda';
 
+  //DZo8
+  klima: boolean = false;
+  miniBar: boolean = false;
+  sauna: boolean = false;
+  racun: number = 5000;
 
   isMenuVisible = false;//poveznao jednosmernim bindingom u html
 
   deleteStatus: 'success' | 'error' | null = null;
-  addStatus: 'success' | 'error' | null = null;
+  addStatus: 'success' | 'error' | 'greskaUDodavanju' | null = null;
 
   constructor(private elementRef: ElementRef) {
     this.sobe = [
@@ -31,11 +36,15 @@ export class AppComponent {
   }
   addSoba(naziv: HTMLInputElement, link: HTMLInputElement, brGostiju: HTMLInputElement): boolean {
     const brGostijuValue = Number(brGostiju.value);
-
-    // Provera da li već postoji soba sa istim nazivom
+    const nazivValue = naziv.value.trim();
+    const linkValue = link.value.trim();
+    // Provera da li vec postoji soba sa istim nazivom
     const exists = this.sobe.some(soba => soba.naziv === naziv.value);
-
-    if (exists) {
+    //ovde je na nivou ako se korisi dugme
+    if (nazivValue.length < 6 || linkValue.length === 0 || brGostijuValue <= 0) {// Ako ovi uslovi ne budu zadovoljeni necemo dodati sobu
+      this.addStatus = 'greskaUDodavanju';
+      console.log('Neuspesno popunjavanje.');
+    } else if (exists) {
       this.addStatus = 'error';
       console.log(`Soba sa nazivom ${naziv.value} već postoji.`);
     } else {
@@ -56,10 +65,10 @@ export class AppComponent {
   }
 
 
-    obrisiSobu(naziv: string): boolean {
-      const index = this.sobe.findIndex(s => s.naziv === naziv);
+  obrisiSobu(naziv: string): boolean {
+    const index = this.sobe.findIndex(s => s.naziv === naziv);
 
-      if(index !== -1) {
+    if (index !== -1) {
       this.sobe.splice(index, 1);
       this.deleteStatus = 'success';
       console.log(`Uspešno obrisana soba sa nazivom: ${naziv}`);
@@ -68,13 +77,12 @@ export class AppComponent {
       console.log(`Soba sa nazivom ${naziv} ne postoji.`);
     }
 
+    console.log(this.sobe);
     setTimeout(() => {
-      this.deleteStatus = null;
+      this.deleteStatus = null;//posle 3 sekunde dodeljujemo vrednost null pa se sakrije opet
     }, 3000); // 3 sekunde
     return false;
   }
-
-
 
   showComponent(component: string): void {
     this.selectedComponent = component;
@@ -93,5 +101,25 @@ export class AppComponent {
       this.isMenuVisible = false;
     }
   }
+  proveriDuzinu(naziv: string): void {
+    if (naziv.length < 6) {
+      console.log("Naziv mora imati barem 6 karaktera.");
+    } else {
+      console.log("Naziv je ispravne dužine.");
+    }
+  }
 
+  izracunajCenu(): void {
+    this.racun = 5000;//osnovna cena
+    if (this.klima) {
+      this.racun += 1000;
+    }
+    if (this.miniBar) {
+      this.racun += 2000;
+    }
+    if (this.sauna) {
+      this.racun += 3000;
+    }
+
+  }
 }
