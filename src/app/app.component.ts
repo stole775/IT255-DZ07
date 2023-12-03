@@ -2,12 +2,15 @@ import { Component } from '@angular/core';
 import { Soba } from './soba/soba.model';
 import { HostListener } from '@angular/core';
 import { ElementRef } from '@angular/core';
+import { RoomServiceService } from './room-service.service'; // Prilagodite putanju prema stvarnom mestu vašeg servisa
+
 
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  providers: [RoomServiceService] //mozda nije trebalo pitanje za profesora
 })
 export class AppComponent {
 
@@ -20,14 +23,16 @@ export class AppComponent {
   klima: boolean = false;
   miniBar: boolean = false;
   sauna: boolean = false;
-  racun: number = 5000;
+  racun: number = 1000;
+  osnivica: number = 1000;
+  brojNoci: number = 0;
 
   isMenuVisible = false;//poveznao jednosmernim bindingom u html
 
   deleteStatus: 'success' | 'error' | null = null;
   addStatus: 'success' | 'error' | 'greskaUDodavanju' | null = null;
 
-  constructor(private elementRef: ElementRef) {
+  constructor(private elementRef: ElementRef, private roomService: RoomServiceService) {
     this.sobe = [
       new Soba('Hotel Grand S1', 'http://hotelgrand.com/soba1', 3, 2),
       new Soba('Hotel Grand S2', 'http://hotelgrand.com/soba2', 2, 4),
@@ -110,7 +115,7 @@ export class AppComponent {
   }
 
   izracunajCenu(): void {
-    this.racun = 5000;//osnovna cena
+    this.racun = this.osnivica;//osnovna cena
     if (this.klima) {
       this.racun += 1000;
     }
@@ -122,4 +127,14 @@ export class AppComponent {
     }
 
   }
+
+  cenaSobe() {
+    // Ovde možete koristiti RoomService za izračunavanje cene
+    const cena = this.roomService.getCena(this.brojNoci);
+    console.log(`Cena za ${this.brojNoci} noći: ${cena}`);
+    // Ažurirajte druge delove logike kako je potrebno
+    this.racun = this.osnivica + cena; 
+  }
+
+
 }

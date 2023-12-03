@@ -48,7 +48,10 @@
       <label for="brGostiju">Broj gostiju:</label>
       <input name="brGostiju" id="brGostiju" #newbrGostiju>
     </div>
-
+    <div class="field">
+      <label for="brojNoci">Broj dana:</label>
+      <input type="number" name="brojNoci" id="brojNoci" [(ngModel)]="brojNoci" (ngModelChange)="cenaSobe()">
+    </div>
     <div class="field">
       <label>Dodatne usluge:</label>
       <div class="ui checkbox">
