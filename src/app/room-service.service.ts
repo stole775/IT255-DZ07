@@ -37,6 +37,11 @@ export class RoomServiceService {
     const url = `${this.apiUrl}/${room.id}`;
     return this.http.put<any>(url, room);
   }
+  updateLikes(roomId: number, votes: number): Observable<any> {
+    const url = `${this.apiUrl}/${roomId}`;
+    const updatedData = { votes }; // Objekat sa samo svojstvom votes
+  return this.http.put<any>(url, updatedData);
+  }
 
  
   deleteRoom(roomId: number): Observable<any> {

@@ -17,13 +17,13 @@
     <div class="meta">Broj osoba:({{soba.brGostiju}})</div>
     <ul class="ui big horizontal list voters">
         <li class="item">
-            <a href (click)="voteUp()">
+            <a href (click)="voteUp(soba, soba.votes)">
                 <i class="arrow up icon"></i>
                 Like
             </a>
         </li>
         <li class="item">
-            <a href (click)="voteDown()">
+            <a href (click)="voteDown(soba, soba.votes)">
                 <i class="arrow down icon"></i>
                 Dislike
             </a>

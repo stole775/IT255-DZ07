@@ -10,7 +10,7 @@ import { RoomServiceService } from './room-service.service'; // Prilagodite puta
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
-  providers: [RoomServiceService] //mozda nije trebalo pitanje za profesora
+  providers: [RoomServiceService]  
 })
 export class AppComponent implements OnInit{
 
@@ -42,6 +42,7 @@ export class AppComponent implements OnInit{
     });
   }
   addSoba(naziv: HTMLInputElement, link: HTMLInputElement, brGostiju: HTMLInputElement): boolean {
+    console.log(this.sobe);
     const brGostijuValue = Number(brGostiju.value);
     const nazivValue = naziv.value.trim();
     const linkValue = link.value.trim();
@@ -56,10 +57,11 @@ export class AppComponent implements OnInit{
       console.log(`Soba sa nazivom ${naziv.value} već postoji.`);
     } else {
      // this.sobe.push(new Soba(naziv.value, link.value, 0, brGostijuValue));
-     this.novaSoba = new Soba(naziv.value, link.value, 0, brGostijuValue);
+     this.novaSoba = new Soba(0,naziv.value, link.value, 0, brGostijuValue);
      this.roomService.addRoom(this.novaSoba).subscribe(novaSoba =>{
       this.sobe.push(novaSoba);
      });
+    
       this.addStatus = 'success';
       console.log(`Soba sa nazivom ${naziv.value} uspešno dodata.`);
     }
@@ -78,22 +80,31 @@ export class AppComponent implements OnInit{
 
   obrisiSobu(naziv: string): boolean {
     const index = this.sobe.findIndex(s => s.naziv === naziv);
-
+  
     if (index !== -1) {
-      this.sobe.splice(index, 1);
-      this.deleteStatus = 'success';
-      console.log(`Uspešno obrisana soba sa nazivom: ${naziv}`);
+       const novaSoba = this.sobe[index];
+      this.roomService.deleteRoom(novaSoba.id).subscribe(
+        () => {
+          this.sobe.splice(index, 1);
+          this.deleteStatus = 'success';
+          console.log(`Uspešno obrisana soba sa nazivom: ${naziv}`);
+        },
+        (error) => {
+          this.deleteStatus = 'error';
+          console.log(`Greška prilikom brisanja sobe sa nazivom ${naziv}: ${error}`);
+        }
+      );
     } else {
       this.deleteStatus = 'error';
       console.log(`Soba sa nazivom ${naziv} ne postoji.`);
     }
-
-    console.log(this.sobe);
+  
     setTimeout(() => {
-      this.deleteStatus = null;//posle 3 sekunde dodeljujemo vrednost null pa se sakrije opet
+      this.deleteStatus = null;
     }, 3000); // 3 sekunde
     return false;
   }
+  
 
   showComponent(component: string): void {
     this.selectedComponent = component;

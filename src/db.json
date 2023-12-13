@@ -22,11 +22,18 @@
       "brGostiju": 1
     },
     {
-      "brGostiju": 2,
+      "brGostiju": 6,
       "naziv": "treci",
       "link": "1",
       "votes": 0,
       "id": 4
+    },
+    {
+      "brGostiju": 2,
+      "id": 5,
+      "naziv": "jhgyftrddssettgfgrd",
+      "link": "sadsadsa",
+      "votes": 3
     }
   ]
 }
