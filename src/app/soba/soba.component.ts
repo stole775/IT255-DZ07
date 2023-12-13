@@ -6,7 +6,6 @@ import { Component,
 
 import { Soba } from './soba.model';
 
-
  
 
 @Component({

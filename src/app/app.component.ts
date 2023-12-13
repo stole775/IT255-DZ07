@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Soba } from './soba/soba.model';
 import { HostListener } from '@angular/core';
 import { ElementRef } from '@angular/core';
@@ -12,12 +12,13 @@ import { RoomServiceService } from './room-service.service'; // Prilagodite puta
   styleUrls: ['./app.component.css'],
   providers: [RoomServiceService] //mozda nije trebalo pitanje za profesora
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
 
   title: string = ''; // *
   naziv: string = ''; // *
-  sobe: Soba[]; // lista
+  sobe!: Soba[]; // lista
   selectedComponent: string = 'ponuda';
+  novaSoba!: Soba;
 
   //DZo8
   klima: boolean = false;
@@ -33,11 +34,12 @@ export class AppComponent {
   addStatus: 'success' | 'error' | 'greskaUDodavanju' | null = null;
 
   constructor(private elementRef: ElementRef, private roomService: RoomServiceService) {
-    this.sobe = [
-      new Soba('Hotel Grand S1', 'http://hotelgrand.com/soba1', 3, 2),
-      new Soba('Hotel Grand S2', 'http://hotelgrand.com/soba2', 2, 4),
-      new Soba('New City', 'http://newcity.rs/sobe/2', 1, 1),
-    ];
+   
+  }
+  ngOnInit(): void {
+    this.roomService.getSobe().subscribe((sobe) => {
+      this.sobe = sobe;
+    });
   }
   addSoba(naziv: HTMLInputElement, link: HTMLInputElement, brGostiju: HTMLInputElement): boolean {
     const brGostijuValue = Number(brGostiju.value);
@@ -53,7 +55,11 @@ export class AppComponent {
       this.addStatus = 'error';
       console.log(`Soba sa nazivom ${naziv.value} već postoji.`);
     } else {
-      this.sobe.push(new Soba(naziv.value, link.value, 0, brGostijuValue));
+     // this.sobe.push(new Soba(naziv.value, link.value, 0, brGostijuValue));
+     this.novaSoba = new Soba(naziv.value, link.value, 0, brGostijuValue);
+     this.roomService.addRoom(this.novaSoba).subscribe(novaSoba =>{
+      this.sobe.push(novaSoba);
+     });
       this.addStatus = 'success';
       console.log(`Soba sa nazivom ${naziv.value} uspešno dodata.`);
     }
@@ -114,27 +120,51 @@ export class AppComponent {
     }
   }
 
-  izracunajCenu(): void {
-    this.racun = this.osnivica;//osnovna cena
+  izracunajCenuKlima(): void {
+   
+  
     if (this.klima) {
       this.racun += 1000;
     }
+    if (!this.klima) {
+      this.racun -= 1000;
+    }
+ 
+ 
+  }izracunajCenuKMiniBar(): void {
+   
+ 
     if (this.miniBar) {
       this.racun += 2000;
     }
-    if (this.sauna) {
-      this.racun += 3000;
+    if (!this.miniBar) {
+      this.racun -= 2000;
     }
 
+ 
+  }
+  izracunajCenuSauna(): void {
+   
+    if (this.sauna) {
+      this.racun += 3000;
+    } 
+    if (!this.sauna) {
+      this.racun -= 3000;
+    } 
+ 
   }
 
   cenaSobe() {
-    // Ovde možete koristiti RoomService za izračunavanje cene
-    const cena = this.roomService.getCena(this.brojNoci);
-    console.log(`Cena za ${this.brojNoci} noći: ${cena}`);
-    // Ažurirajte druge delove logike kako je potrebno
-    this.racun = this.osnivica + cena; 
+  // Ovde možete koristiti RoomService za izračunavanje cene
+  const cena = this.roomService.getCena(this.brojNoci);
+  console.log(`Cena za ${this.brojNoci} noći: ${cena}`);
+  // Ažurirajte druge delove logike kako je potrebno
+  this.racun = this.osnivica + cena; 
+  
   }
+
+
+  
 
 
 }

@@ -1,0 +1,32 @@
+{
+  "podaci": [
+    {
+      "id": 1,
+      "naziv": "Prvi podatak",
+      "link": "http://primer.com/1",
+      "votes": 5,
+      "brGostiju": 2
+    },
+    {
+      "id": 2,
+      "naziv": "Drugi podatak",
+      "link": "http://primer.com/2",
+      "votes": 3,
+      "brGostiju": 3
+    },
+    {
+      "id": 3,
+      "naziv": "Treći podatak",
+      "link": "http://primer.com/3",
+      "votes": 8,
+      "brGostiju": 1
+    },
+    {
+      "brGostiju": 2,
+      "naziv": "treci",
+      "link": "1",
+      "votes": 0,
+      "id": 4
+    }
+  ]
+}

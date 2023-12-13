@@ -55,25 +55,25 @@
     <div class="field">
       <label>Dodatne usluge:</label>
       <div class="ui checkbox">
-        <input type="checkbox" id="klima"  name="klima"  [(ngModel)]="klima" (ngModelChange)="izracunajCenu()">
+        <input type="checkbox" id="klima"  name="klima"  [(ngModel)]="klima" (ngModelChange)="izracunajCenuKlima()">
         <label for="klima">Klima</label>
       </div>
       <br>
       <div class="ui checkbox">
-        <input type="checkbox" id="miniBar" name="miniBar" [(ngModel)]="miniBar" (ngModelChange)="izracunajCenu()">
+        <input type="checkbox" id="miniBar" name="miniBar" [(ngModel)]="miniBar" (ngModelChange)="izracunajCenuKMiniBar()">
         <label for="miniBar">Mini Bar</label>
       </div>
       <br>
       <div class="ui checkbox">
-        <input type="checkbox" id="sauna"  name="sauna" [(ngModel)]="sauna" (ngModelChange)="izracunajCenu()">
+        <input type="checkbox" id="sauna"  name="sauna" [(ngModel)]="sauna" (ngModelChange)="izracunajCenuSauna()">
         <label for="sauna">Sauna</label>
       </div>
 
     </div>
 
-    <ng-container *ngIf="racun > 5000; else osnova">
+    <ng-container *ngIf="racun > 1000; else osnova">
       <div class="ui message" style="width: 70%;  ">
-        <p>Vaš račun je uvećan za {{ racun }} dinara.</p>
+        <p>Vaš račun iznosi sa dodacima {{ racun }} dinara.</p>
       </div>
     </ng-container>
     
@@ -99,6 +99,7 @@
     <label *ngIf="addStatus === 'error'" class="error-message">Soba već postoji.</label>
 
   </form>
+ 
   <div class="ui grid posts">
     <app-soba *ngFor="let soba of sobe" [soba]="soba"></app-soba>
 

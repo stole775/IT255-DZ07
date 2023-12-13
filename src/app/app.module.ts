@@ -8,7 +8,8 @@ import { PonudaComponent } from './ponuda/ponuda.component';
 import { PreporukaComponent } from './preporuka/preporuka.component';
 import { ONamaComponent } from './onama/onama.component';
 import { DataService } from './data.service';
-
+import { RoomServiceService } from './room-service.service';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -20,11 +21,14 @@ import { DataService } from './data.service';
     ONamaComponent 
   ],
   imports: [
+    HttpClientModule,
     BrowserModule,
     AppRoutingModule,
     FormsModule
   ],
-  providers: [DataService],
+  providers: [DataService,RoomServiceService
+  ],
+  
   bootstrap: [AppComponent]
 })
 export class AppModule { }
