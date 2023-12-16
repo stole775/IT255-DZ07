@@ -46,6 +46,8 @@ export class AppComponent implements OnInit{
     const brGostijuValue = Number(brGostiju.value);
     const nazivValue = naziv.value.trim();
     const linkValue = link.value.trim();
+     
+     console.log( this.racun);
     // Provera da li vec postoji soba sa istim nazivom
     const exists = this.sobe.some(soba => soba.naziv === naziv.value);
     //ovde je na nivou ako se korisi dugme
@@ -57,7 +59,7 @@ export class AppComponent implements OnInit{
       console.log(`Soba sa nazivom ${naziv.value} već postoji.`);
     } else {
      // this.sobe.push(new Soba(naziv.value, link.value, 0, brGostijuValue));
-     this.novaSoba = new Soba(0,naziv.value, link.value, 0, brGostijuValue);
+     this.novaSoba = new Soba(0,naziv.value, link.value, 0, brGostijuValue,this.racun);
      this.roomService.addRoom(this.novaSoba).subscribe(novaSoba =>{
       this.sobe.push(novaSoba);
      });

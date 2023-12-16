@@ -4,14 +4,14 @@
       "id": 1,
       "naziv": "Prvi podatak",
       "link": "http://primer.com/1",
-      "votes": 5,
+      "votes": 7,
       "brGostiju": 2
     },
     {
       "id": 2,
       "naziv": "Drugi podatak",
       "link": "http://primer.com/2",
-      "votes": 3,
+      "votes": 4,
       "brGostiju": 3
     },
     {
@@ -19,7 +19,8 @@
       "naziv": "Treći podatak",
       "link": "http://primer.com/3",
       "votes": 8,
-      "brGostiju": 1
+      "brGostiju": 1,
+      "cena": 20000
     },
     {
       "brGostiju": 6,
@@ -29,10 +30,11 @@
       "id": 4
     },
     {
-      "brGostiju": 2,
+      "brGostiju": 23,
+      "cena": 48400,
       "id": 5,
-      "naziv": "jhgyftrddssettgfgrd",
-      "link": "sadsadsa",
+      "naziv": "sdasdasdsdas",
+      "link": "eww",
       "votes": 3
     }
   ]
