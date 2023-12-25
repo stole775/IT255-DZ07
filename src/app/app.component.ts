@@ -3,7 +3,8 @@ import { Soba } from './soba/soba.model';
 import { HostListener } from '@angular/core';
 import { ElementRef } from '@angular/core';
 import { RoomServiceService } from './room-service.service'; // Prilagodite putanju prema stvarnom mestu vašeg servisa
-
+ 
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -33,9 +34,11 @@ export class AppComponent implements OnInit{
   deleteStatus: 'success' | 'error' | null = null;
   addStatus: 'success' | 'error' | 'greskaUDodavanju' | null = null;
 
-  constructor(private elementRef: ElementRef, private roomService: RoomServiceService) {
-   
+  constructor(private router: Router,private elementRef: ElementRef, private roomService: RoomServiceService) {
+ 
   }
+ 
+
   ngOnInit(): void {
     this.roomService.getSobe().subscribe((sobe) => {
       this.sobe = sobe;
@@ -108,8 +111,12 @@ export class AppComponent implements OnInit{
   }
   
 
-  showComponent(component: string): void {
+  showComponentStari(component: string): void {
     this.selectedComponent = component;
+    this.isMenuVisible = true;
+  }
+  showComponent(component: string): void {
+    this.router.navigate([component]);
     this.isMenuVisible = true;
   }
 
@@ -168,10 +175,10 @@ export class AppComponent implements OnInit{
   }
 
   cenaSobe() {
-  // Ovde možete koristiti RoomService za izračunavanje cene
+ 
   const cena = this.roomService.getCena(this.brojNoci);
   console.log(`Cena za ${this.brojNoci} noći: ${cena}`);
-  // Ažurirajte druge delove logike kako je potrebno
+ 
   this.racun = this.osnivica + cena; 
   
   }

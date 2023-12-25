@@ -20,7 +20,7 @@
     <a class="item" (click)="showComponent('preporuka')">Preporuka</a>
     <a class="item" (click)="showComponent('o-nama')">O nama</a>
   </div>
-
+   
   <div class="ui grid posts" *ngIf="isMenuVisible">
     <ng-container *ngIf="selectedComponent === 'ponuda'">
       <app-ponuda></app-ponuda>
