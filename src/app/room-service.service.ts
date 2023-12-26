@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
+import { Soba } from './soba/soba.model';
  
 
 
@@ -25,8 +26,11 @@ export class RoomServiceService {
   }
 
 
-  getSobe(): Observable<any[]> {
-    return this.http.get<any[]>(this.apiUrl);
+  getSobe(): Observable<Soba[]> { //umesto soba bilo je any
+   // return this.http.get<any[]>(this.apiUrl); staro
+   return this.http.get<any[]>(this.apiUrl).pipe(
+    map(data => data.map(item => new Soba(item.id, item.naziv, item.link, item.votes, item.brGostiju, item.cena)))
+  );
   }
 
   addRoom(room: any): Observable<any> {

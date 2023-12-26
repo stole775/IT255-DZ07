@@ -4,7 +4,7 @@ import { HostListener } from '@angular/core';
 import { ElementRef } from '@angular/core';
 import { RoomServiceService } from './room-service.service'; // Prilagodite putanju prema stvarnom mestu vašeg servisa
  
-import { Router } from '@angular/router';
+import { Router,NavigationEnd  } from '@angular/router';
 
 
 @Component({
@@ -35,7 +35,11 @@ export class AppComponent implements OnInit{
   addStatus: 'success' | 'error' | 'greskaUDodavanju' | null = null;
 
   constructor(private router: Router,private elementRef: ElementRef, private roomService: RoomServiceService) {
- 
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.isMenuVisible=true;//ovo je za navigaciju preko url
+      }
+    });
   }
  
 
@@ -111,14 +115,12 @@ export class AppComponent implements OnInit{
   }
   
 
-  showComponentStari(component: string): void {
+  showComponent(component: string): void {
     this.selectedComponent = component;
     this.isMenuVisible = true;
+    this.router.navigate(['/' + component]);
   }
-  showComponent(component: string): void {
-    this.router.navigate([component]);
-    this.isMenuVisible = true;
-  }
+  
 
   @HostListener('document:click', ['$event'])
   toggleMenu(event: Event): void {
@@ -130,6 +132,10 @@ export class AppComponent implements OnInit{
     // Ako nije kliknuto na traku menija, sakrij meni
     if (!isMenuClick) {
       this.isMenuVisible = false;
+      this.router.navigate(['/'  ]);
+    } else {
+       
+      this.isMenuVisible = true;
     }
   }
   proveriDuzinu(naziv: string): void {

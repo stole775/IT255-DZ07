@@ -22,7 +22,7 @@
   </div>
    
   <div class="ui grid posts" *ngIf="isMenuVisible">
-    <ng-container *ngIf="selectedComponent === 'ponuda'">
+   <!-- <ng-container *ngIf="selectedComponent === 'ponuda'">
       <app-ponuda></app-ponuda>
     </ng-container>
     <ng-container *ngIf="selectedComponent === 'preporuka'">
@@ -30,7 +30,8 @@
     </ng-container>
     <ng-container *ngIf="selectedComponent === 'o-nama'">
       <app-o-nama></app-o-nama>
-    </ng-container>
+    </ng-container>-->
+    <router-outlet></router-outlet>
   </div>
 
 
